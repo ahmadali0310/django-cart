@@ -54,3 +54,4 @@ class OrderItem(models.Model):
         total = self.quantity * self.product.price
         return total
 
+
