@@ -56,3 +56,13 @@ def update_cart(request):
     return JsonResponse(json.dumps({'quantity': orderitem.quantity, 'id': product.id, "get_product_total": orderitem.get_product_total, "get_items_quantity": order.get_items_quantity, "get_items_total": order.get_items_total}, cls=JSONEncoder), safe=False)
 
 
+
+def cart_quantity(request):
+    try:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer , complete=False)
+        quantity = order.get_items_quantity
+    except:
+        quantity = 0
+
+    return JsonResponse(json.dumps({"quantity": quantity}), safe=False)
